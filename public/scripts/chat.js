@@ -47,8 +47,19 @@ function addMessage(content, isUser = false, imageData = null) {
     // Generate unique ID for typing animation
     const messageId = `message-${Date.now()}`;
 
+    const escapeHtml = (unsafe) => {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    };
+
     if (isUser) {
-        contentDiv.innerHTML = `<p class="text-gray-800">${content}</p>`;
+        const escapedContent = escapeHtml(content);
+        // For user messages, we wrap in a pre tag to preserve whitespace and newlines
+        contentDiv.innerHTML = `<pre class="text-gray-800 break-anywhere whitespace-pre-wrap font-sans">${escapedContent}</pre>`;
     } else {
         let contentHtml = `<div class="text-gray-800 dark:text-gray-200 markdown-content"><span id="${messageId}"></span></div>`;
 
@@ -132,24 +143,40 @@ function addMessage(content, isUser = false, imageData = null) {
 
     // Handle image loading if present
     if (imageData) {
-        generateImage(imageData.prompt, imageData.width, imageData.height).then(async imageUrl => {
-            const base64Image = await urlToBase64(imageUrl);
-            if (base64Image) {
-                const imageContainer = document.getElementById(`${messageId}-image`);
-                if (imageContainer) {
-                    attachImageWithTools(imageContainer, base64Image, imageUrl, imageData.prompt);
+        generateImage(imageData.prompt, imageData.width, imageData.height)
+            .then(async imageUrl => {
+                const base64Image = await urlToBase64(imageUrl);
+                if (base64Image) {
+                    const imageContainer = document.getElementById(`${messageId}-image`);
+                    const errorContainer = document.getElementById(`${messageId}-error`);
                     const spinner = imageContainer.parentElement.querySelector('.loading-spinner');
-                    if (spinner) spinner.remove();
+
+                    if (imageContainer) {
+                        attachImageWithTools(imageContainer, base64Image, imageUrl, imageData.prompt);
+                        if (spinner) spinner.remove();
+                        if (errorContainer) errorContainer.classList.add('hidden');
+                    }
+                } else {
+                    throw new Error('Failed to convert image to base64');
                 }
-            }
-        });
+            })
+            .catch(error => {
+                const imageContainer = document.getElementById(`${messageId}-image`);
+                const errorContainer = document.getElementById(`${messageId}-error`);
+                const spinner = document.querySelector('.loading-spinner');
+                if (errorContainer) {
+                    errorContainer.classList.remove('hidden');
+                }
+                if (spinner) spinner.remove();
+                imageContainer.innerHTML = `<p class="text-red-500">Failed to load image: ${error.message}</p>`;
+            });
     }
 }
 
 // Add copy buttons to code blocks
 function addCopyButtons() {
     document.querySelectorAll('pre').forEach((pre) => {
-        if (!pre.querySelector('.copy-button')) {
+        if (!pre.querySelector('.copy-button') && pre.querySelector('code')) {
             const button = document.createElement('button');
             button.className = 'copy-button bg-gray-800 text-white px-2 py-1 rounded absolute top-2 right-2';
             button.innerText = 'Copy';
