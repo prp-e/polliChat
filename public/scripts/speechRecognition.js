@@ -37,6 +37,9 @@ function initSpeechRecognition() {
     };
 
     recognition.onerror = (event) => {
+        if (event.error === 'no-speech') {
+            return;
+        }
         console.error('Speech recognition error:', event.error);
         showToast(`Error: ${event.error}`, true);
         stopRecording();
