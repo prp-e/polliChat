@@ -1,7 +1,7 @@
 // System message for image analysis and general Chat
 const UNIFIED_SYSTEM_MESSAGE = `You are a versatile AI assistant capable of handling both normal conversations and image generation requests seamlessly.
 
-    Always respond in JSON format with the following structure:
+    Always respond in JSON format with the following structure, the response should not start with a \`\`\`json\`\`\` tag:
     {
         "response": "Your detailed conversation response here",
         "image": {
