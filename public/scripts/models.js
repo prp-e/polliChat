@@ -17,6 +17,8 @@ async function fetchModels() {
         // remove specific models (if exist any longer) because doesnot work properly with system commands
         // remove unity, midijourney, rtist, p1 and evil models
         const filteredModels = models.filter(model => !['unity', 'midijourney', 'rtist', 'evil', 'p1'].includes(model.name));
+        // add claude model as it is not mentioned in the list
+        filteredModels.push({ name: 'claude' });
         modelSelect.innerHTML = filteredModels.map(filteredModels =>
             `<option value="${filteredModels.name}">${filteredModels.name}</option>`
         ).join('');
