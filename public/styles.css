@@ -165,6 +165,17 @@ img {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 1rem;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.markdown-content table thead {
+    white-space: nowrap;
+}
+
+.markdown-content table tbody {
+    white-space: normal;
 }
 
 .markdown-content th,
@@ -172,6 +183,25 @@ img {
     padding: 0.75rem;
     border: 1px solid #d1d5db;
     text-align: left;
+    min-width: 100px; /* Ensure cells don't get too narrow */
+}
+
+/* Add smooth scrolling for table container */
+.markdown-content table::-webkit-scrollbar {
+    height: 6px;
+}
+
+.markdown-content table::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.markdown-content table::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 20px;
+}
+
+.dark .markdown-content table::-webkit-scrollbar-thumb {
+    background-color: #475569;
 }
 
 .markdown-content th {
