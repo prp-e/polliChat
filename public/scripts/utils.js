@@ -22,7 +22,6 @@ async function urlToBase64(url) {
             reader.readAsDataURL(blob);
         });
     } catch (error) {
-        console.error('Error converting URL to base64:', error);
-        return null;
+        throw error;
     }
 }
