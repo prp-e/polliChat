@@ -14,7 +14,7 @@ function startNewChat() {
                                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <div class="ml-4 bg-gray-100 rounded-lg p-4 max-w-[80%]">
+                    <div class="ml-4 bg-gray-100 rounded-lg p-4 max-w-[85%]">
                         <p class="text-gray-800">Hello! I'm your AI assistant. Choose a model and start chatting!</p>
                     </div>
                 </div>
