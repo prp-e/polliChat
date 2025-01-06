@@ -1,4 +1,4 @@
-# Polli-Chat 🎉
+# Polli-Chat 🐝
 
 Welcome to **Polli-Chat**, a next-generation AI-powered chat application designed to enhance your chatting experience with a host of innovative features. Whether you're looking to generate and modify images on the fly, switch between multiple AI models, or export your conversations in various formats, Polli-Chat has got you covered!
 
@@ -12,7 +12,7 @@ Welcome to **Polli-Chat**, a next-generation AI-powered chat application designe
    - The AI remembers the context of your chat sessions, providing a seamless and coherent conversational experience.
 
 ### 3. **Multi-Model Selection** 🔄
-   - Switch between various AI models such as `OpenAI`, `Mistral`, `LLaMA`, `Qwen`, and more within a single chat session.
+   - Switch between various AI models such as `OpenAI`, `Mistral`, `LLaMA`, `Qwen`, `Claude` and more within a single chat session.
 
 ### 4. **Speech Recognition** 🎙️
    - Enjoy hands-free chatting with speech recognition, making conversations more natural and effortless.
@@ -27,7 +27,15 @@ Welcome to **Polli-Chat**, a next-generation AI-powered chat application designe
 ### 6. **Code Syntax Highlighting** 💻
    - Share and view code snippets with syntax highlighting for better readability, thanks to PrismJS.
 
-### 7. **Dark and Light Mode** 🌗
+### 7. **Chat Actions** 🛠️
+   - **Copy Message** 📋: Copy any message to your clipboard with a single click
+   - **TTS** 🗣️: Convert any message to speech using Text-to-Speech functionality
+
+### 8. **Image Actions** 🖼️
+   - **Copy Image** 📋: Copy any image to your clipboard with a single click
+   - **Download Image** 📥: Save any image to your device with a single clic
+
+### 9. **Dark and Light Mode** 🌗
    - Switch between dark and light themes to suit your preference and environment.
 
 ## Libraries Used 📚
@@ -38,7 +46,6 @@ Welcome to **Polli-Chat**, a next-generation AI-powered chat application designe
 - **Typed.js**: For dynamic text effects.
 
 ## Upcoming Features 🚀
-- **Mobile Support**: Optimized experience for mobile devices.
 - **AI Vision**: Allow the AI to analyze and discuss user-uploaded images.
 - **Automatic Model Selection**: Intelligent model selection based on user needs, both for images and chat.
 
