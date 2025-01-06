@@ -42,7 +42,7 @@ function addMessage(content, isUser = false, imageData = null) {
     iconDiv.innerHTML = icon;
 
     const contentDiv = document.createElement('div');
-    contentDiv.className = 'ml-4 bg-gray-100 rounded-lg p-4 max-w-[80%]';
+    contentDiv.className = 'ml-2 lg:ml-4 bg-gray-100 rounded-lg p-4 max-w-[85%]';
 
     // Generate unique ID for typing animation
     const messageId = `message-${Date.now()}`;
@@ -206,19 +206,29 @@ chatForm.addEventListener('submit', async (e) => {
 
     try {
         conversationHistory.push({ role: 'user', content: message });
+        const requestBody = {
+            messages: [
+                { role: 'system', content: UNIFIED_SYSTEM_MESSAGE },
+                ...conversationHistory
+            ],
+            model: modelSelect.value,
+            seed: generateSeed(),
+            response_format: {
+                type: "json_object"
+            }
+        };
+
+        // Remove the seed parameter if the current model is 'deepseek'
+        if (modelSelect.value === 'deepseek') {
+            delete requestBody.response_format;
+        }
+
         const response = await fetch('https://text.pollinations.ai/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                messages: [
-                    { role: 'system', content: UNIFIED_SYSTEM_MESSAGE },
-                    ...conversationHistory
-                ],
-                model: modelSelect.value,
-                seed: generateSeed()
-            })
+            body: JSON.stringify(requestBody)
         });
 
         const data = await response.text();
@@ -280,7 +290,7 @@ stopButton.addEventListener('click', () => {
 // Helper Function to attach images
 function attachImageWithTools(imageContainer, base64Image, originalUrl, prompt) {
     const wrapper = document.createElement('div');
-    wrapper.className = 'image-container p-2';
+    wrapper.className = 'image-container p-0 lg:p-2';
     wrapper.innerHTML = `
                 <img src="${base64Image}" alt="${prompt}" class="chat-image rounded-lg shadow-lg">
                 <div class="image-utils">
