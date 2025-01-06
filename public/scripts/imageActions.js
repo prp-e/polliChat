@@ -17,7 +17,8 @@ function downloadImage(url, filename) {
 // Copy Image utility (bugged)
 async function copyImageToClipboard(url) {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, { mode: 'cors' });
+        if (!response.ok) throw new Error('Network response was not ok.');
         const blob = await response.blob();
 
         // Try the newer Clipboard API first
@@ -36,26 +37,10 @@ async function copyImageToClipboard(url) {
         }
 
         // Fallback method using canvas
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.src = url;
-        await new Promise((resolve, reject) => {
-            img.onload = resolve;
-            img.onerror = reject;
-        });
-
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-
-        canvas.toBlob(async (blob) => {
+        setCanvasImage(url, async (imgBlob) => {
             try {
                 await navigator.clipboard.write([
-                    new ClipboardItem({
-                        [blob.type]: blob
-                    })
+                    new ClipboardItem({ 'image/png': imgBlob })
                 ]);
                 showToast('Image copied to clipboard!');
             } catch (e) {
@@ -67,6 +52,24 @@ async function copyImageToClipboard(url) {
         console.error('Error copying image:', error);
         showToast('Failed to copy image. Try using the download button instead.', true);
     }
+}
+
+function setCanvasImage(path, func) {
+    const img = new Image();
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    img.onload = function () {
+        canvas.width = this.naturalWidth;
+        canvas.height = this.naturalHeight;
+        ctx.drawImage(this, 0, 0);
+        canvas.toBlob(blob => {
+            func(blob);
+        }, 'image/png');
+    };
+
+    img.crossOrigin = 'anonymous'; // Ensure CORS compliance
+    img.src = path;
 }
 
 // Copy Image URL utility
