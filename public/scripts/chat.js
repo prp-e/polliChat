@@ -250,7 +250,7 @@ chatForm.addEventListener('submit', async (e) => {
             delete requestBody.response_format;
         }
 
-        const response = await fetch('https://openai.jabirproject.org/v1/chat/completions', {
+        const response = await fetch('https://openai.jabirproject.org/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
