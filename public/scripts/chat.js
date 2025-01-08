@@ -235,6 +235,7 @@ chatForm.addEventListener('submit', async (e) => {
         conversationHistory.push({ role: 'user', content: message });
         const requestBody = {
             messages: [
+                { role: 'system', content: UNIFIED_SYSTEM_MESSAGE },
                 ...conversationHistory
             ],
             model: modelSelect.value,
@@ -249,7 +250,7 @@ chatForm.addEventListener('submit', async (e) => {
             delete requestBody.response_format;
         }
 
-        const response = await fetch('https://openai.jabirproject.org/v1/', {
+        const response = await fetch('https://openai.jabirproject.org/v1/chat/completions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
