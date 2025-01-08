@@ -12,7 +12,7 @@ function loadModelPreference() {
 // function to fetch available models
 async function fetchModels() {
     try {
-        const response = await fetch('https://text.pollinations.ai/models');
+        const response = await fetch('https://openai.jabirproject.org/v1/models');
         const models = await response.json();
         // remove specific models (if exist any longer) because doesnot work properly with system commands
         // remove unity, midijourney, rtist, p1 and evil models
