@@ -249,7 +249,7 @@ chatForm.addEventListener('submit', async (e) => {
             delete requestBody.response_format;
         }
 
-        const response = await fetch('https://text.pollinations.ai/', {
+        const response = await fetch('https://openai.jabirproject.org/v1/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
