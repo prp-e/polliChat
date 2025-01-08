@@ -235,7 +235,6 @@ chatForm.addEventListener('submit', async (e) => {
         conversationHistory.push({ role: 'user', content: message });
         const requestBody = {
             messages: [
-                { role: 'system', content: UNIFIED_SYSTEM_MESSAGE },
                 ...conversationHistory
             ],
             model: modelSelect.value,
