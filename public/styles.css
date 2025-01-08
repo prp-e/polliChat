@@ -1,3 +1,7 @@
+* {
+    unicode-bidi: plaintext;
+}
+
 html {
     scroll-behavior: smooth;
 }
